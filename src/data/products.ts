@@ -1,4 +1,6 @@
-export const products = [
+import { IProduct } from "../models/IProduct";
+
+export const products: IProduct[] = [
   {
     id: 1,
     name: "iPhone 14",

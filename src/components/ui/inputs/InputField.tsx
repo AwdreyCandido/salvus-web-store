@@ -10,6 +10,7 @@ const InputField: React.FC<InputProps> = ({
   type,
   maxLength,
   minLength,
+  defaultValue,
 }) => {
   return (
     <div className="flex gap-2 w-full my-4 flex-col font-sora text-text">
@@ -22,6 +23,7 @@ const InputField: React.FC<InputProps> = ({
         type={type}
         maxLength={maxLength}
         minLength={minLength}
+        defaultValue={defaultValue}
       />
     </div>
   );

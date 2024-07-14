@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PrimaryButton from "../../components/ui/buttons/primary-button/PrimaryButton";
 import ProductCard from "../../components/product-card/ProductCard";
 import Layout from "../../components/ui/layout/Layout";
-import { products } from "../../data/products";
+import { ProductsContext } from "../../context/ProductsContext";
+import { IProduct } from "../../models/IProduct";
 import NewProductModal from "../../components/modals/new-product/NewProductModal";
 
 const HomePage = () => {
-  const [productsList, setProductsList] = useState(products);
-  const [newProductModalIsOpen, setNewProductModalIsOpen] = useState(true);
+  const { showAddModal, showModal, productsList } = useContext(ProductsContext);
 
   return (
     <>
@@ -15,16 +15,25 @@ const HomePage = () => {
         <div className="text-dark">
           <div className="flex w-full justify-between items-center">
             <h1 className="font-sora  text-h1 font-bold">Todos os Produtos</h1>
-            <PrimaryButton title="Adicionar novo Produto" />
+            <PrimaryButton
+              title="Adicionar novo Produto"
+              onClick={showAddModal}
+            />
           </div>
           <div className="mt-16"></div>
           <div>
-            <h2 className="text-h2 font-sora font-semibold">
-              {productsList.length} Produtos encontrados
-            </h2>
+            {productsList.length > 0 ? (
+              <h2 className="text-h2 font-sora font-semibold">
+                {productsList.length} Produtos encontrados
+              </h2>
+            ) : (
+              <h2 className="text-h2 font-sora font-semibold">
+                Nenhum produto encontrado
+              </h2>
+            )}
           </div>
-          <section className="flex flex-wrap justify-between mt-8">
-            {productsList.map((prod) => {
+          <section className="justify-between mt-4 pb-8 grid grid-cols-6">
+            {productsList.map((prod: IProduct) => {
               return (
                 <ProductCard
                   id={prod.id}
@@ -42,7 +51,7 @@ const HomePage = () => {
           </section>
         </div>
       </Layout>
-      {newProductModalIsOpen && <NewProductModal />}
+      {showModal && <NewProductModal />}
     </>
   );
 };

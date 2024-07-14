@@ -16,6 +16,7 @@ const SelectInput: React.FC<SelectProps> = ({
   placeholder,
   onChange,
   items,
+  defaultValue,
 }) => {
   return (
     <div className="flex gap-2 w-full my-4 flex-col font-sora text-text">
@@ -24,6 +25,7 @@ const SelectInput: React.FC<SelectProps> = ({
         <select
           name={name}
           onChange={onChange}
+          defaultValue={defaultValue}
           className="h-[4rem] bg-gray w-full appearance-none text-text px-4 py-2  outline-0 "
         >
           <option className="" disabled selected>

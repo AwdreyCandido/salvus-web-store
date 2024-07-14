@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/homepage/HomePage.tsx";
 import ProductDetails from "./pages/product-details/ProductDetails.tsx";
+import ProductsContextProvider from "./context/ProductsContext.tsx";
 
 const router = createBrowserRouter([
   { path: "/dashboard/home", element: <HomePage /> },
@@ -13,6 +14,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ProductsContextProvider>
+      <RouterProvider router={router} />
+    </ProductsContextProvider>
   </React.StrictMode>
 );

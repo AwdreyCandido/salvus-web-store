@@ -8,8 +8,10 @@ import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
 
-const NewProductModal = () => {
-  const [product, setProduct] = useState<IProduct>({} as IProduct);
+const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
+  selectedProduct,
+}) => {
+  const [product, setProduct] = useState<IProduct>(selectedProduct);
   const { closeModal } = useContext(ProductsContext);
 
   const getInputValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +40,7 @@ const NewProductModal = () => {
             onClick={closeModal}
             className="text-[3rem] stroke-[1.4] cursor-pointer"
           />
-          <h1 className="font-sora  text-[3rem] font-bold">Novo Produto</h1>
+          <h1 className="font-sora  text-[3rem] font-bold">Editar Produto</h1>
         </div>
         <div className="mt-[4rem]">
           <h2 className="text-h3 font-sora text-primary">
@@ -51,12 +53,14 @@ const NewProductModal = () => {
             onChange={getInputValueHandler}
             type="text"
             minLength={5}
+            defaultValue={product.name}
           />
           <TextField
             name="description"
             label="Descrição"
             placeholder="Descrição do Produto..."
             onChange={getTextAreaValueHandler}
+            defaultValue={product.description}
           />
           <div className="flex gap-8 justify-between">
             <InputField
@@ -66,6 +70,7 @@ const NewProductModal = () => {
               onChange={getInputValueHandler}
               type="number"
               maxLength={5}
+              defaultValue={product.price}
             />
             <InputField
               name="quantity"
@@ -74,6 +79,7 @@ const NewProductModal = () => {
               onChange={getInputValueHandler}
               type="number"
               maxLength={1000}
+              defaultValue={product.quantity}
             />
           </div>
           <div className="flex gap-8 justify-between">
@@ -83,6 +89,7 @@ const NewProductModal = () => {
               placeholder="Selecione um departamento..."
               onChange={getSelectValueHandler}
               items={departments}
+              defaultValue={product.departmentId}
             />
             <SelectInput
               name="categoryId"
@@ -90,13 +97,14 @@ const NewProductModal = () => {
               placeholder="Selecione uma categoria..."
               onChange={getSelectValueHandler}
               items={categories}
+              defaultValue={product.categoryId}
             />
           </div>
         </div>
         <div className="flex w-full mt-[5rem] align-bottom justify-between">
           <PrimaryButton title="Excluir" />
           <PrimaryButton
-            title="Salvar Novo Produto"
+            title="Confirmar"
             onClick={() => {
               console.log(product);
             }}
@@ -107,4 +115,4 @@ const NewProductModal = () => {
   );
 };
 
-export default NewProductModal;
+export default UpdateProductModal;

@@ -1,33 +1,51 @@
-import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 import Layout from "../../components/ui/layout/Layout";
 import PrimaryButton from "../../components/ui/buttons/primary-button/PrimaryButton";
 import { HiArrowLeft } from "react-icons/hi2";
 import { useParams, useNavigate } from "react-router-dom";
-import { products } from "../../data/products";
+import { ProductsContext } from "../../context/ProductsContext";
+import UpdateProductModal from "../../components/modals/update-product/UpdateProductModal";
 
 const ProductDetails = () => {
   const { productId } = useParams();
+  const { productsList, deleteProduct, showAddModal, showModal } =
+    useContext(ProductsContext);
   const navigate = useNavigate();
 
-  const selected = products.find((prod) => prod.id == +productId!);
+  const selected = productsList.find((prod) => prod.id == +productId!);
 
   function goBack() {
     navigate(-1);
   }
 
+  if (!productId) return <h1 className="text-h1">Esse produto não existe</h1>;
+
+  const deleteProductHandler = () => {
+    deleteProduct(+productId);
+    goBack();
+  };
+
   return (
-    <Layout>
-      <div className="flex w-full justify-between items-center">
-        <div className="flex text-dark items-center gap-8">
-          <HiArrowLeft onClick={goBack} className="text-h1 stroke-[1.2] cursor-pointer" />
-          <h1 className="font-sora  text-h1 font-bold">{selected?.name}</h1>
+    <>
+      <Layout>
+        <div className="flex w-full justify-between items-center">
+          <div className="flex text-dark items-center gap-8">
+            <HiArrowLeft
+              onClick={goBack}
+              className="text-h1 stroke-[1.2] cursor-pointer"
+            />
+            <h1 className="font-sora  text-h1 font-bold">{selected?.name}</h1>
+          </div>
+          <div className="flex gap-8">
+            <PrimaryButton title="Excluir" onClick={deleteProductHandler} />
+            <PrimaryButton title="Editar Produto" onClick={showAddModal} />
+          </div>
         </div>
-        <div className="flex gap-8">
-          <PrimaryButton title="Excluir" />
-          <PrimaryButton title="Editar" />
-        </div>
-      </div>
-    </Layout>
+      </Layout>
+      {showModal && selected && (
+        <UpdateProductModal selectedProduct={selected} />
+      )}
+    </>
   );
 };
 
