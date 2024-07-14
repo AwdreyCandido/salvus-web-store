@@ -3,9 +3,9 @@ import placeholderImg from "./../../assets/imgs/placeholder.png"
 
 const ProductCard = () => {
   return (
-    <div className="flex flex-col w-[28rem] h-[38rem] rounded-2xl bg-white shadow-lg overflow-hidden font-sora text-dark">
-      <div className="bg-danger w-full rounded-2xl  flex-1 overflow-hidden">
-        <img src={placeholderImg} />
+    <div className="flex flex-col w-[28rem] h-[38rem] rounded-2xl bg-white shadow-lg cursor-pointer overflow-hidden font-sora text-dark">
+      <div className="bg-danger w-full rounded-b-[2rem]  flex-1 overflow-hidden">
+        <img className="hover:scale-110 duration-300" src={placeholderImg} />
       </div>
       <div className="p-4 flex flex-col gap-4">
         <p className="text-h3 font-semibold">R$ 99,99</p>
