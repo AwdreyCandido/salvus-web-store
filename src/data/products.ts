@@ -68,17 +68,17 @@ export const products = [
 ];
 
 export const departments = [
-  { id: 1, department: "Eletrônicos" },
-  { id: 2, department: "Eletrodomésticos" },
-  { id: 3, department: "Livros" },
-  { id: 4, department: "Roupas" },
-  { id: 5, department: "Esportes" },
+  { id: 1, name: "Eletrônicos" },
+  { id: 2, name: "Eletrodomésticos" },
+  { id: 3, name: "Livros" },
+  { id: 4, name: "Roupas" },
+  { id: 5, name: "Esportes" },
 ];
 
 export const categories = [
-  { id: 1, department: "Celulares" },
-  { id: 2, department: "Notebooks" },
-  { id: 3, department: "Cozinha" },
-  { id: 4, department: "Ficção" },
-  { id: 5, department: "Fitness" },
+  { id: 1, name: "Celulares" },
+  { id: 2, name: "Notebooks" },
+  { id: 3, name: "Cozinha" },
+  { id: 4, name: "Ficção" },
+  { id: 5, name: "Fitness" },
 ];
