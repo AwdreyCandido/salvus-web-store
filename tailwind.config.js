@@ -22,6 +22,7 @@ export default {
       "danger-light": "#FFE5D3",
       "warning-light": "#FFF5CC",
       dark: "#303030",
+      gray: "#f7f7f7"
     },
     fontFamily: {
       sora: "Sora, sans-serif",

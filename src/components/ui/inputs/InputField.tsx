@@ -1,12 +1,18 @@
-import React from 'react'
+import React from "react";
 
-const InputField = () => {
+interface InputProps extends React.HTMLProps<HTMLInputElement> {}
+
+const InputField: React.FC<InputProps> = ({ name, label, placeholder }) => {
   return (
-    <div className='flex gap-2 my-4 flex-col font-sora text-text'>
-      <label className='text-h4'>Label</label>
-      <input className='h-[4rem] px-4 py-2 rounded-xl outline-0 border-2 border-primary-light ring-primary' placeholder='Placeholder...' />
+    <div className="flex gap-2 w-full my-4 flex-col font-sora text-text">
+      <label className="text-h4">{label}</label>
+      <input
+        name={name}
+        className="h-[4rem] bg-gray px-4 py-2 rounded-2xl outline-0 border-2 border-primary-light ring-primary"
+        placeholder={placeholder}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default InputField
+export default InputField;
