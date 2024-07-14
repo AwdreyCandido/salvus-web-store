@@ -16,6 +16,11 @@ export default {
         80: "#000000cc",
         100: "#000000",
       },
+      "primary-light": "#9ADA9D",
+      "success-light": "#E2FBD7",
+      "info-light": "#CCF8FE",
+      "danger-light": "#FFE5D3",
+      "warning-light": "#FFF5CC",
       dark: "#303030",
     },
     fontFamily: {

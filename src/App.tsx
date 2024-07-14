@@ -1,9 +1,10 @@
 import './App.css'
+import HomePage from './pages/homepage/HomePage'
 
 function App() {
 
   return (
-    <div className='font-sora text-h1 font-bold'>Salvus Web Store</div>
+   <HomePage/>
   )
 }
 
