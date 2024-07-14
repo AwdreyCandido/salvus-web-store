@@ -1,19 +1,44 @@
 import React from "react";
-import placeholderImg from "./../../assets/imgs/placeholder.png"
+import placeholderImg from "./../../assets/imgs/placeholder.png";
 
-const ProductCard = () => {
+type ProductProps = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  createdAt: string;
+  categoryId: number;
+  departmentId: number;
+  quantity: number;
+  tags: string;
+};
+
+const ProductCard: React.FC<ProductProps> = ({
+  id,
+  name,
+  description,
+  price,
+  createdAt,
+  categoryId,
+  departmentId,
+  quantity,
+  tags,
+}) => {
   return (
-    <div className="flex flex-col w-[28rem] h-[38rem] rounded-2xl bg-white shadow-lg cursor-pointer overflow-hidden font-sora text-dark">
-      <div className="bg-danger w-full rounded-b-[2rem]  flex-1 overflow-hidden">
-        <img className="hover:scale-110 duration-300" src={placeholderImg} />
+    <div className="flex flex-col w-[22rem] h-[30rem] rounded-2xl bg-white shadow-lg hover:shadow-none cursor-pointer overflow-hidden font-sora text-dark duration-300">
+      <div className="w-full h-[18rem] rounded-b-[2rem]  flex-1 overflow-hidden">
+        <img
+          className="hover:scale-110 hover:rounded-[2rem] duration-300"
+          src={placeholderImg}
+        />
       </div>
-      <div className="p-4 flex flex-col gap-4">
-        <p className="text-h3 font-semibold">R$ 99,99</p>
-        <p className="text-h4">Nome do produto</p>
-        <div className="text-[1.1rem] h-full">
-          <p>Estoque: 10</p>
-          <p>Última atualização: 13/07/24 às 18:00h</p>
-        </div>
+      <div className="p-4 flex flex-col gap-2">
+        <p className="text-h4 font-bold leading-tight">R$ {price}</p>
+        <p className="text-h3 leading-tight overflow-ellipsis truncate">
+          {name}
+        </p>
+        <p className="leading-none mt-2">Estoque: {quantity}</p>
+        <p>Última atualização: {new Date(createdAt).toLocaleDateString()}</p>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const OutlineButton: React.FC<{
   return (
     <button
       onClick={props.onClick}
-      className={`flex items-center justify-center font-sora text-text py-3 px-8 rounded-xl oubordertline border-2 border-primary text-primary hover:bg-primary cursor-pointer hover:text-white duration-300`}
+      className={`flex items-center justify-center font-sora text-text py-4 px-8 rounded-xl oubordertline border-2 border-primary text-primary hover:bg-primary cursor-pointer hover:text-white duration-300`}
     >
       <div>{props.title}</div>
     </button>

@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   return (
     <nav
-      className={`text-black-40 z-[2] flex items-center flex-col py-8  min-h-screen bg-white rounded-r-[2rem] shadow-xl ${
+      className={`fixed text-black-20 z-[2] flex items-center flex-col py-8  min-h-screen bg-white rounded-r-[2rem] shadow-xl ${
         expandNav ? "w-fit" : "w-[7rem]"
       }`}
     >

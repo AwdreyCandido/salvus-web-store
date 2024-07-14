@@ -7,7 +7,7 @@ const PrimaryButton: React.FC<{
   return (
     <button
       onClick={props.onClick}
-      className={`flex items-center justify-center font-sora text-text bg-primary py-3 px-8 rounded-xl oubordertline border-2 border-primary text-white hover:bg-white cursor-pointer hover:text-primary duration-300`}
+      className={`flex items-center justify-center font-sora text-text bg-primary py-4 px-8 rounded-xl oubordertline border-2 border-primary text-white hover:bg-white cursor-pointer hover:text-primary duration-300`}
     >
       <div>{props.title}</div>
     </button>
