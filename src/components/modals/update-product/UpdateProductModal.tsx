@@ -12,7 +12,7 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
   selectedProduct,
 }) => {
   const [product, setProduct] = useState<IProduct>(selectedProduct);
-  const { closeModal } = useContext(ProductsContext);
+  const { closeModal, updateProduct } = useContext(ProductsContext);
 
   const getInputValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
@@ -26,6 +26,11 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
 
   const getSelectValueHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
+  };
+
+  const updateProductHandler = () => {
+    updateProduct(product);
+    // closeModal();
   };
 
   return (
@@ -103,12 +108,7 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
         </div>
         <div className="flex w-full mt-[5rem] align-bottom justify-between">
           <PrimaryButton title="Excluir" />
-          <PrimaryButton
-            title="Confirmar"
-            onClick={() => {
-              console.log(product);
-            }}
-          />
+          <PrimaryButton title="Confirmar" onClick={updateProductHandler} />
         </div>
       </div>
     </div>

@@ -36,11 +36,13 @@ const ProductsContextProvider: React.FC<{ children: JSX.Element }> = ({
     closeModal();
   };
 
-  const updateProduct = (updatedTask: IProduct) => {
-    const selectedTask = productsList.find(
-      (prevTask) => prevTask.id == updatedTask.id
+  const updateProduct = (updatedProduct: IProduct) => {
+    const selectedProductIndex = productsList.findIndex(
+      (prevProduct) => prevProduct.id == updatedProduct.id
     );
-    console.log(selectedTask);
+
+    productsList[selectedProductIndex] = updatedProduct;
+    console.log(updatedProduct);
   };
 
   const deleteProduct = (id: number) => {

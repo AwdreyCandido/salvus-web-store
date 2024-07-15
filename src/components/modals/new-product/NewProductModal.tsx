@@ -10,7 +10,7 @@ import { ProductsContext } from "../../../context/ProductsContext";
 
 const NewProductModal = () => {
   const [product, setProduct] = useState<IProduct>({} as IProduct);
-  const { closeModal } = useContext(ProductsContext);
+  const { closeModal, addProduct } = useContext(ProductsContext);
 
   const getInputValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
@@ -24,6 +24,11 @@ const NewProductModal = () => {
 
   const getSelectValueHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
+  };
+
+  const addNewProductHandler = () => {
+    addProduct(product);
+    closeModal();
   };
 
   return (
@@ -97,9 +102,7 @@ const NewProductModal = () => {
           <PrimaryButton title="Excluir" />
           <PrimaryButton
             title="Salvar Novo Produto"
-            onClick={() => {
-              console.log(product);
-            }}
+            onClick={addNewProductHandler}
           />
         </div>
       </div>
