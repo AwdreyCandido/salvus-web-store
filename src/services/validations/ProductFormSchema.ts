@@ -17,7 +17,7 @@ export const productFormSchema = z.object({
         .max(1000, { message: "A quantidade não pode ser maior que 1000." }),
     categoryId: z.coerce.number({ invalid_type_error: "Selecione uma categoria.", required_error: "Selecione uma categoria." }),
     departmentId: z.coerce.number({ invalid_type_error: "Selecione uma categoria.", required_error: "Selecione um departamento" }),
-    createdAt: z.string()
+    createdAt: z.string().optional()
     //     tags: z.string(),
 })//.refine(data => data.price > 0 && data.quantity > 0, {
 //     message: "O preço e a quantidade precisam ser maiores que 0.",

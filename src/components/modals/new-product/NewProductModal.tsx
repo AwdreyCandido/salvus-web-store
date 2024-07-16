@@ -26,7 +26,10 @@ const NewProductModal = () => {
     const res = await createProductRequest(product)
 
     if (res?.status == 200 && res.statusText == 'OK') {
-      addProduct(product);
+      const id = res.data.insertId
+      
+
+      addProduct({ ...product, id });
       notifySuccess("Novo produto criado com sucesso!")
       closeModal();
       return
@@ -36,7 +39,10 @@ const NewProductModal = () => {
   };
 
   const onSubmit: SubmitHandler<ProductFormSchema> = async (productData) => {
-    await addNewProductHandler(productData)
+    const newProduct = productData;
+    newProduct.createdAt = new Date().toISOString()
+
+    await addNewProductHandler(newProduct)
   }
 
 
@@ -195,7 +201,6 @@ const NewProductModal = () => {
               <PrimaryButton
                 title="Salvar Novo Produto"
                 type="submit"
-                onClick={() => { methods.handleSubmit(onSubmit) }}
               />
             </div>
           </form>
