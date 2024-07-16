@@ -44,7 +44,7 @@ const DeleteProductModal: React.FC<{ productId: number, toggleModal: () => void 
                 </div>
                 <p className="font-sora text-h4">Tem certeza que deseja excluir esse produto? Essa ação é irreversível.</p>
                 <div className="flex w-full place-content-end justify-between">
-                    <PrimaryButton title="Excluir" onClick={deleteProductHandler} />
+                    <PrimaryButton title="Excluir" mode='delete' onClick={deleteProductHandler} />
                 </div>
             </div>
         </div>

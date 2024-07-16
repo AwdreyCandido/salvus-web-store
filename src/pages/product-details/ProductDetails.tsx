@@ -40,7 +40,7 @@ const ProductDetails = () => {
             <h1 className="font-sora  text-h1 font-bold">{selected?.name}</h1>
           </div>
           <div className="flex gap-8">
-            <PrimaryButton title="Excluir" onClick={deleteModalHandler} />
+            <PrimaryButton title="Excluir" mode="delete" onClick={deleteModalHandler} />
             <PrimaryButton title="Editar Produto" onClick={showAddModal} />
           </div>
         </div>

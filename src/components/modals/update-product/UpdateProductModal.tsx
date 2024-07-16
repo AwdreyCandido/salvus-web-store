@@ -119,7 +119,7 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
           </div>
         </div>
         <div className="flex w-full mt-[5rem] align-bottom justify-between">
-          <PrimaryButton title="Excluir" />
+          <PrimaryButton title="Cancelar" mode="delete" onClick={closeModal} />
           <PrimaryButton title="Confirmar" onClick={updateProductHandler} />
         </div>
       </div>

@@ -111,7 +111,7 @@ const NewProductModal = () => {
           </div>
         </div>
         <div className="flex w-full mt-[5rem] align-bottom justify-between">
-          <PrimaryButton title="Excluir" />
+          <PrimaryButton title="Cancelar" mode="delete" onClick={closeModal} />
           <PrimaryButton
             title="Salvar Novo Produto"
             onClick={addNewProductHandler}
