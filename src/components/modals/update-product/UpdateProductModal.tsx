@@ -10,40 +10,51 @@ import { ProductsContext } from "../../../context/ProductsContext";
 import { updateProductRequest } from "../../../services/http/products";
 import toast from "react-hot-toast";
 import { notifyError, notifySuccess } from "../../../services/notifications/toasts";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProductFormSchema, productFormSchema } from "../../../services/validations/ProductFormSchema";
+import { useParams } from "react-router-dom";
 
 const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
   selectedProduct,
 }) => {
   const [product, setProduct] = useState<IProduct>(selectedProduct);
   const { closeModal, updateProduct } = useContext(ProductsContext);
+  const { productId } = useParams();
 
-  const getInputValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
-  };
+  const methods = useForm<ProductFormSchema>({
+    resolver: zodResolver(productFormSchema),
+    mode: "onBlur",
+    defaultValues: {
+      name: selectedProduct.name,
+      description: selectedProduct.description,
+      price: selectedProduct.price,
+      quantity: selectedProduct.quantity,
+      departmentId: selectedProduct.departmentId,
+      categoryId: selectedProduct.categoryId,
+      createdAt: selectedProduct.createdAt
+    }
+  });
 
-  const getTextAreaValueHandler = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
-  };
+  const updateProductHandler = async (productData: IProduct) => {
+    console.log(productData)
+    if (productId) {
+      const res = await updateProductRequest(+productId, productData)
 
-  const getSelectValueHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
-  };
-
-  const updateProductHandler = async () => {
-    // VALIDAÇÕES
-
-    const res = await updateProductRequest(product.id!, product)
-
-    if (res?.status == 200 && res.statusText == 'OK') {
-      updateProduct(product);
-      notifySuccess("Produto atualizado com sucesso!")
-      return closeModal();
+      if (res?.status == 200 && res.statusText == 'OK') {
+        updateProduct({ ...product, ...productData });
+        notifySuccess("Produto atualizado com sucesso!")
+        return closeModal();
+      }
     }
 
     notifyError("Falha em atualizar o produto.")
   };
+
+  const onSubmit: SubmitHandler<ProductFormSchema> = async (productData) => {
+    updateProductHandler(productData)
+  }
+
 
   return (
     <div>
@@ -63,64 +74,146 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
           <h2 className="text-h3 font-sora text-primary">
             Informações principais
           </h2>
-          <InputField
-            name="name"
-            label="Nome"
-            placeholder="Nome do Produto..."
-            onChange={getInputValueHandler}
-            type="text"
-            minLength={5}
-            defaultValue={product.name}
-          />
-          <TextField
-            name="description"
-            label="Descrição"
-            placeholder="Descrição do Produto..."
-            onChange={getTextAreaValueHandler}
-            defaultValue={product.description}
-          />
-          <div className="flex gap-8 justify-between">
-            <InputField
-              name="price"
-              label="Preço"
-              placeholder="Ex: 99,99"
-              onChange={getInputValueHandler}
-              type="number"
-              maxLength={5}
-              defaultValue={product.price}
+
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <Controller
+              control={methods.control}
+              name="name"
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error }
+              }) => {
+                return (
+                  <InputField
+                    name="name"
+                    label="Nome"
+                    placeholder="Nome do Produto..."
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    type="text"
+                    errorMessage={error?.message}
+                  />
+                )
+              }}
             />
-            <InputField
-              name="quantity"
-              label="Quatidade"
-              placeholder="Ex: 10"
-              onChange={getInputValueHandler}
-              type="number"
-              maxLength={1000}
-              defaultValue={product.quantity}
+            <Controller
+              control={methods.control}
+              name="description"
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error }
+              }) => {
+                return (
+                  <TextField
+                    name="description"
+                    label="Descrição"
+                    placeholder="Descrição do Produto..."
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    errorMessage={error?.message}
+                  />
+                )
+              }}
             />
-          </div>
-          <div className="flex gap-8 justify-between">
-            <SelectInput
-              name="departmentId"
-              label="Departamento"
-              placeholder="Selecione um departamento..."
-              onChange={getSelectValueHandler}
-              items={departments}
-              defaultValue={product.departmentId}
-            />
-            <SelectInput
-              name="categoryId"
-              label="Categoria"
-              placeholder="Selecione uma categoria..."
-              onChange={getSelectValueHandler}
-              items={categories}
-              defaultValue={product.categoryId}
-            />
-          </div>
-        </div>
-        <div className="flex w-full mt-[5rem] align-bottom justify-between">
-          <PrimaryButton title="Cancelar" mode="delete" onClick={closeModal} />
-          <PrimaryButton title="Confirmar" onClick={updateProductHandler} />
+            <div className="flex gap-8 justify-between">
+              <Controller
+                control={methods.control}
+                name="price"
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error }
+                }) => {
+                  return (
+                    <InputField
+                      name="price"
+                      label="Preço"
+                      placeholder="Ex: 99,99"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      type="number"
+                      errorMessage={error?.message}
+                    />
+                  )
+                }}
+              />
+              <Controller
+                control={methods.control}
+                name="quantity"
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error }
+                }) => {
+                  return (
+                    <InputField
+                      name="quantity"
+                      label="Quatidade"
+                      placeholder="Ex: 10"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      type="number"
+                      errorMessage={error?.message}
+                    />
+                  )
+                }}
+              />
+            </div>
+            <div className="flex gap-8 justify-between">
+              <Controller
+                control={methods.control}
+                name="departmentId"
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error }
+                }) => {
+                  return (
+                    <SelectInput
+                      name="departmentId"
+                      label="Departamento"
+                      placeholder="Selecione um departamento..."
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      items={departments}
+                      errorMessage={error?.message}
+                    />
+                  )
+                }}
+              />
+              <Controller
+                control={methods.control}
+                name="categoryId"
+                render={({
+                  field: { onChange, onBlur, value },
+                  fieldState: { error }
+                }) => {
+                  return (
+                    <SelectInput
+                      name="categoryId"
+                      label="Categoria"
+                      placeholder="Selecione uma categoria..."
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      items={categories}
+                      errorMessage={error?.message}
+                    />
+                  )
+                }}
+              />
+            </div>
+            <div className="flex w-full mt-[5rem] align-bottom justify-between">
+              <PrimaryButton title="Cancelar" mode="delete" onClick={closeModal} />
+              <PrimaryButton
+                title="Salvar Novo Produto"
+                type="submit"
+                onClick={() => { methods.handleSubmit(onSubmit) }}
+              />
+            </div>
+          </form>
         </div>
       </div>
     </div>

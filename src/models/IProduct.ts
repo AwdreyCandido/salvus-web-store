@@ -3,7 +3,7 @@ export interface IProduct {
   name: string;
   description: string;
   price: number;
-  createdAt: string | Date;
+  createdAt?: string;
   // EXTRA FIELDS
   quantity?: number;
   categoryId?: number;
