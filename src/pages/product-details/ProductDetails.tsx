@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Layout from "../../components/ui/layout/Layout";
 import PrimaryButton from "../../components/ui/buttons/primary-button/PrimaryButton";
 import { HiArrowLeft } from "react-icons/hi2";
@@ -6,8 +6,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ProductsContext } from "../../context/ProductsContext";
 import UpdateProductModal from "../../components/modals/update-product/UpdateProductModal";
 import { deleteProductRequest } from "../../services/http/products";
+import DeleteProductModal from "../../components/modals/delete-product/DeleteProductModal";
 
 const ProductDetails = () => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const { productId } = useParams();
   const { productsList, deleteProduct, showAddModal, showModal } =
     useContext(ProductsContext);
@@ -21,18 +23,10 @@ const ProductDetails = () => {
 
   if (!productId) return <h1 className="text-h1">Esse produto não existe</h1>;
 
-  const deleteProductHandler = async () => {
+  function deleteModalHandler() {
+    setShowDeleteModal(!showDeleteModal)
+  }
 
-    const res = await deleteProductRequest(+productId)
-
-    if (res?.status == 200 && res.statusText == 'OK') {
-      deleteProduct(+productId);
-      goBack();
-      return
-    }
-
-    window.alert("Erro ao excluir produto")
-  };
 
   return (
     <>
@@ -46,7 +40,7 @@ const ProductDetails = () => {
             <h1 className="font-sora  text-h1 font-bold">{selected?.name}</h1>
           </div>
           <div className="flex gap-8">
-            <PrimaryButton title="Excluir" onClick={deleteProductHandler} />
+            <PrimaryButton title="Excluir" onClick={deleteModalHandler} />
             <PrimaryButton title="Editar Produto" onClick={showAddModal} />
           </div>
         </div>
@@ -54,6 +48,7 @@ const ProductDetails = () => {
       {showModal && selected && (
         <UpdateProductModal selectedProduct={selected} />
       )}
+      {showDeleteModal && <DeleteProductModal toggleModal={deleteModalHandler} productId={+productId} />}
     </>
   );
 };

@@ -8,6 +8,8 @@ import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { updateProductRequest } from "../../../services/http/products";
+import toast from "react-hot-toast";
+import { notifyError, notifySuccess } from "../../../services/notifications/toasts";
 
 const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
   selectedProduct,
@@ -36,11 +38,11 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
 
     if (res?.status == 200 && res.statusText == 'OK') {
       updateProduct(product);
-      closeModal();
-      return
+      notifySuccess("Produto atualizado com sucesso!")
+      return closeModal();
     }
 
-    window.alert("Erro ao editar produto")
+    notifyError("Falha em atualizar o produto.")
   };
 
   return (

@@ -8,6 +8,7 @@ import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { createProductRequest } from "../../../services/http/products";
+import { notifyError, notifySuccess } from "../../../services/notifications/toasts";
 
 const NewProductModal = () => {
   const [product, setProduct] = useState<IProduct>({} as IProduct);
@@ -34,11 +35,12 @@ const NewProductModal = () => {
 
     if (res?.status == 200 && res.statusText == 'OK') {
       addProduct(product);
+      notifySuccess("Novo produto criado com sucesso!")
       closeModal();
       return
     }
 
-    window.alert("Erro ao criar produto")
+    notifyError("Falha ao criar novo produto.")
   };
 
   return (
