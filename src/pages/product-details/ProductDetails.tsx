@@ -5,6 +5,7 @@ import { HiArrowLeft } from "react-icons/hi2";
 import { useParams, useNavigate } from "react-router-dom";
 import { ProductsContext } from "../../context/ProductsContext";
 import UpdateProductModal from "../../components/modals/update-product/UpdateProductModal";
+import { deleteProductRequest } from "../../services/http/products";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -20,9 +21,17 @@ const ProductDetails = () => {
 
   if (!productId) return <h1 className="text-h1">Esse produto não existe</h1>;
 
-  const deleteProductHandler = () => {
-    deleteProduct(+productId);
-    goBack();
+  const deleteProductHandler = async () => {
+
+    const res = await deleteProductRequest(+productId)
+
+    if (res?.status == 200 && res.statusText == 'OK') {
+      deleteProduct(+productId);
+      goBack();
+      return
+    }
+
+    window.alert("Erro ao excluir produto")
   };
 
   return (

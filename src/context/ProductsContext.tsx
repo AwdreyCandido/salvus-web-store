@@ -7,6 +7,7 @@ interface IProductsContextProps {
   showAddModal: () => void;
   closeModal: () => void;
   productsList: IProduct[];
+  setAllProducts: (incomingList: IProduct[]) => void;
   addProduct: (newProduct: IProduct) => void;
   updateProduct: (updatedTask: IProduct) => void;
   deleteProduct: (id: number) => void;
@@ -20,7 +21,7 @@ const ProductsContextProvider: React.FC<{ children: JSX.Element }> = ({
   children,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [productsList, setProductsList] = useState<IProduct[]>(products);
+  const [productsList, setProductsList] = useState<IProduct[]>([]);
 
   const showAddModal = () => {
     setShowModal(true);
@@ -29,6 +30,10 @@ const ProductsContextProvider: React.FC<{ children: JSX.Element }> = ({
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const setAllProducts = (incomingList: IProduct[]) => {
+    setProductsList(incomingList)
+  }
 
   // PRODUCTS CRUD
   const addProduct = (newProduct: IProduct) => {
@@ -57,6 +62,7 @@ const ProductsContextProvider: React.FC<{ children: JSX.Element }> = ({
     showAddModal,
     closeModal,
     productsList,
+    setAllProducts,
     addProduct,
     updateProduct,
     deleteProduct,

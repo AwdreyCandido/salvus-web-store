@@ -1,13 +1,31 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PrimaryButton from "../../components/ui/buttons/primary-button/PrimaryButton";
 import ProductCard from "../../components/product-card/ProductCard";
 import Layout from "../../components/ui/layout/Layout";
 import { ProductsContext } from "../../context/ProductsContext";
 import { IProduct } from "../../models/IProduct";
 import NewProductModal from "../../components/modals/new-product/NewProductModal";
+import { getAllProductsRequest } from "../../services/http/products";
 
 const HomePage = () => {
-  const { showAddModal, showModal, productsList } = useContext(ProductsContext);
+  const { showAddModal, showModal, productsList, setAllProducts } = useContext(ProductsContext);
+
+  const getAllProductsHandler = async () => {
+    const res = await getAllProductsRequest()
+
+    if (res?.status == 200 && res.statusText == 'OK') {
+      setAllProducts(res.data)
+      return
+    }
+
+    window.alert("Erro ao buscar todos os produtos")
+  }
+
+  useEffect(() => {
+    getAllProductsHandler()
+  }, [])
+
+
 
   return (
     <>

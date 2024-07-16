@@ -7,6 +7,7 @@ import { IProduct } from "../../../models/IProduct";
 import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
+import { updateProductRequest } from "../../../services/http/products";
 
 const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
   selectedProduct,
@@ -28,9 +29,18 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
     setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
   };
 
-  const updateProductHandler = () => {
-    updateProduct(product);
-    // closeModal();
+  const updateProductHandler = async () => {
+    // VALIDAÇÕES
+
+    const res = await updateProductRequest(product.id!, product)
+
+    if (res?.status == 200 && res.statusText == 'OK') {
+      updateProduct(product);
+      closeModal();
+      return
+    }
+
+    window.alert("Erro ao editar produto")
   };
 
   return (

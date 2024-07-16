@@ -7,6 +7,7 @@ import { IProduct } from "../../../models/IProduct";
 import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
+import { createProductRequest } from "../../../services/http/products";
 
 const NewProductModal = () => {
   const [product, setProduct] = useState<IProduct>({} as IProduct);
@@ -26,9 +27,18 @@ const NewProductModal = () => {
     setProduct({ ...product, [e.currentTarget?.name]: e.currentTarget?.value });
   };
 
-  const addNewProductHandler = () => {
-    addProduct(product);
-    closeModal();
+  const addNewProductHandler = async () => {
+    // VALIDAÇÕES
+
+    const res = await createProductRequest(product)
+
+    if (res?.status == 200 && res.statusText == 'OK') {
+      addProduct(product);
+      closeModal();
+      return
+    }
+
+    window.alert("Erro ao criar produto")
   };
 
   return (
