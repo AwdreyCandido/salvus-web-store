@@ -6,7 +6,7 @@ export const productFormSchema = z.object({
         .max(50, { message: "O nome não pode ter mais de 50 caracteres." }),
     description: z.string({ required_error: "Descrição é obrigatório" })
         .min(10, { message: "A descrição deve ter pelo menos 10 caracteres." })
-        .max(200, { message: "A descrição não pode ter mais de 200 caracteres." }),
+        .max(1000, { message: "A descrição não pode ter mais de 1000 caracteres." }),
     price: z.coerce.number({ invalid_type_error: "O preço não pode ser menor que R$1.", required_error: "Preço é obrigatório" })
         .positive({ message: "O preço precisa ser maior que 0." })
         .min(1, { message: "O preço não pode ser menor que R$1." })

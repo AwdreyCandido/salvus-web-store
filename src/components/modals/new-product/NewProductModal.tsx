@@ -52,7 +52,7 @@ const NewProductModal = () => {
         onClick={closeModal}
         className="h-[100vh] w-[100vw] fixed aspect-video bg-black-20 backdrop-blur-sm drop-shadow-[20rem] cursor-pointer z-40 top-0 left-0"
       ></div>
-      <div data-aos="slide-left" data-aos-mirror="true" className="h-full w-[40vw] z-50 overflow-y-auto fixed rounded-l-[2rem] p-8 px-12 right-0 top-0 bg-white">
+      <div data-aos="slide-left" data-aos-mirror="true" className="h-full  xl:w-[40vw] lg:w-[50vw] md:w-[65vw] sm:w-[80vw] w-full z-50 overflow-y-auto fixed rounded-l-[2rem] p-8 px-12 right-0 top-0 bg-white">
         <div className="flex text-dark items-center gap-8">
           <HiArrowLeft
             onClick={closeModal}
@@ -108,7 +108,7 @@ const NewProductModal = () => {
                 )
               }}
             />
-            <div className="flex gap-8 justify-between">
+            <div className="flex flex-col md:flex-row md:gap-8 justify-between">
               <Controller
                 control={methods.control}
                 name="price"
@@ -152,7 +152,7 @@ const NewProductModal = () => {
                 }}
               />
             </div>
-            <div className="flex gap-8 justify-between">
+            <div className="flex flex-col md:flex-row md:gap-8 justify-between">
               <Controller
                 control={methods.control}
                 name="departmentId"

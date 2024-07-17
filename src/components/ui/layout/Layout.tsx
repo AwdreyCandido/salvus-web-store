@@ -7,7 +7,7 @@ const Layout: React.FC<{ children: JSX.Element }> = ({ children }) => {
       <div className="w-[7rem]">
         <Sidebar />
       </div>
-      <section className="px-[4rem] py-[2rem] flex-1">{children}</section>
+      <section className="px-[4rem] py-[2rem] flex-1 overflow-y-scroll">{children}</section>
     </div>
   );
 };

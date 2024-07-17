@@ -8,5 +8,7 @@ export interface IProduct {
   quantity?: number;
   categoryId?: number;
   departmentId?: number;
+  category?: string;
+  department?: string;
   tags?: string;
 }

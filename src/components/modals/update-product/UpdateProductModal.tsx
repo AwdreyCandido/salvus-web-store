@@ -14,24 +14,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductFormSchema, productFormSchema } from "../../../services/validations/ProductFormSchema";
 import { useParams } from "react-router-dom";
 
-const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
-  selectedProduct,
-}) => {
-  const [product, setProduct] = useState<IProduct>(selectedProduct);
-  const { closeModal, updateProduct } = useContext(ProductsContext);
+const UpdateProductModal: React.FC = () => {
+
+  // const [product, setProduct] = useState<IProduct>(selectedProduct);
+  const { closeModal, updateProduct, productsList } = useContext(ProductsContext);
   const { productId } = useParams();
+
+  const selectedProduct = productsList.find((prod) => prod.id == +productId!);
+
 
   const methods = useForm<ProductFormSchema>({
     resolver: zodResolver(productFormSchema),
     mode: "onBlur",
     defaultValues: {
-      name: selectedProduct.name,
-      description: selectedProduct.description,
-      price: selectedProduct.price,
-      quantity: selectedProduct.quantity,
-      departmentId: selectedProduct.departmentId,
-      categoryId: selectedProduct.categoryId,
-      createdAt: selectedProduct.createdAt
+      name: selectedProduct?.name,
+      description: selectedProduct?.description,
+      price: selectedProduct?.price,
+      quantity: selectedProduct?.quantity,
+      departmentId: selectedProduct?.departmentId,
+      categoryId: selectedProduct?.categoryId,
+      createdAt: selectedProduct?.createdAt
     }
   });
 
@@ -40,8 +42,8 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
     if (productId) {
       const res = await updateProductRequest(+productId, productData)
 
-      if (res?.status == 200 ) { //&& res.statusText == 'OK'
-        updateProduct({ ...product, ...productData });
+      if (res?.status == 200) { //&& res.statusText == 'OK'
+        updateProduct({ ...selectedProduct, ...productData });
         notifySuccess("Produto atualizado com sucesso!")
         return closeModal();
       }
@@ -61,7 +63,7 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
         onClick={closeModal}
         className="h-[100vh] w-[100vw] fixed aspect-video bg-black-20 backdrop-blur-sm drop-shadow-[20rem] cursor-pointer z-40 top-0 left-0"
       ></div>
-      <div data-aos="slide-left" data-aos-mirror="true" className="h-full w-[40vw] z-50 overflow-y-auto fixed rounded-l-[2rem] p-8 px-12 right-0 top-0 bg-white">
+      <div data-aos="slide-left" data-aos-mirror="true" className="h-full xl:w-[40vw] lg:w-[50vw] md:w-[65vw] sm:w-[80vw] w-full z-50 overflow-y-auto fixed rounded-l-[2rem] p-8 px-12 right-0 top-0 bg-white">
         <div className="flex text-dark items-center gap-8">
           <HiArrowLeft
             onClick={closeModal}
@@ -116,7 +118,7 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
                 )
               }}
             />
-            <div className="flex gap-8 justify-between">
+            <div className="flex flex-col md:flex-row md:gap-8 justify-between">
               <Controller
                 control={methods.control}
                 name="price"
@@ -160,7 +162,7 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
                 }}
               />
             </div>
-            <div className="flex gap-8 justify-between">
+            <div className="flex flex-col md:flex-row md:gap-8 justify-between">
               <Controller
                 control={methods.control}
                 name="departmentId"
@@ -207,9 +209,8 @@ const UpdateProductModal: React.FC<{ selectedProduct: IProduct }> = ({
             <div className="flex w-full mt-[5rem] align-bottom justify-between">
               <PrimaryButton title="Cancelar" mode="delete" onClick={closeModal} />
               <PrimaryButton
-                title="Salvar Novo Produto"
+                title="Confirmar"
                 type="submit"
-                onClick={() => { methods.handleSubmit(onSubmit) }}
               />
             </div>
           </form>

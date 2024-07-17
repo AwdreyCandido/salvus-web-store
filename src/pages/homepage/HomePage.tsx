@@ -53,7 +53,7 @@ const HomePage = () => {
               </h2>
             )}
           </div>
-          <section className="justify-between mt-4 pb-8 grid grid-cols-6">
+          <section className="justify-between place-items-center mt-4 pb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {productsList.map((prod: IProduct) => {
               return (
                 <ProductCard
