@@ -6,14 +6,16 @@ import { ProductsContext } from "../../context/ProductsContext";
 import { IProduct } from "../../models/IProduct";
 import NewProductModal from "../../components/modals/new-product/NewProductModal";
 import { getAllProductsRequest } from "../../services/http/products";
+import Aos from "aos";
+
 
 const HomePage = () => {
   const { showAddModal, showModal, productsList, setAllProducts } = useContext(ProductsContext);
 
   const getAllProductsHandler = async () => {
     const res = await getAllProductsRequest()
-
-    if (res?.status == 200 && res.statusText == 'OK') {
+    console.log(res)
+    if (res?.status == 200 ) { //&& res.statusText == 'OK'
       setAllProducts(res.data)
       return
     }
@@ -22,6 +24,7 @@ const HomePage = () => {
   }
 
   useEffect(() => {
+    Aos.init();
     getAllProductsHandler()
   }, [])
 

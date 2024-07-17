@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import { HiArrowLeft } from "react-icons/hi2";
 import InputField from "../../ui/inputs/InputField";
 import SelectInput from "../../ui/inputs/SelectInput";
@@ -9,7 +9,7 @@ import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { createProductRequest } from "../../../services/http/products";
 import { notifyError, notifySuccess } from "../../../services/notifications/toasts";
-import { Controller, FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { productFormSchema, ProductFormSchema } from "../../../services/validations/ProductFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -25,9 +25,9 @@ const NewProductModal = () => {
 
     const res = await createProductRequest(product)
 
-    if (res?.status == 200 && res.statusText == 'OK') {
+    if (res?.status == 200) { // && res.statusText == 'OK'
       const id = res.data.insertId
-      
+
 
       addProduct({ ...product, id });
       notifySuccess("Novo produto criado com sucesso!")
@@ -52,7 +52,7 @@ const NewProductModal = () => {
         onClick={closeModal}
         className="h-[100vh] w-[100vw] fixed aspect-video bg-black-20 backdrop-blur-sm drop-shadow-[20rem] cursor-pointer z-40 top-0 left-0"
       ></div>
-      <div className="h-full w-[40vw] z-50 overflow-y-auto fixed rounded-l-[2rem] p-8 px-12 right-0 top-0 bg-white">
+      <div data-aos="slide-left" data-aos-mirror="true" className="h-full w-[40vw] z-50 overflow-y-auto fixed rounded-l-[2rem] p-8 px-12 right-0 top-0 bg-white">
         <div className="flex text-dark items-center gap-8">
           <HiArrowLeft
             onClick={closeModal}

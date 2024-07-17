@@ -6,17 +6,13 @@ import { IProduct } from "../../models/IProduct";
 const ProductCard: React.FC<IProduct> = ({
   id,
   name,
-  description,
   price,
   createdAt,
-  categoryId,
-  departmentId,
   quantity,
-  tags,
 }) => {
   return (
     <NavLink to={`/dashboard/product/${id}`}>
-      <div className="flex flex-col w-[22rem] h-[30rem] mt-6 rounded-2xl bg-white shadow-lg hover:shadow-none cursor-pointer overflow-hidden font-sora border border-black-10 text-dark duration-300">
+      <div data-aos="fade-up" className="flex flex-col w-[22rem] h-[30rem] mt-6 rounded-2xl bg-white shadow-lg hover:shadow-none cursor-pointer overflow-hidden font-sora border border-black-10 text-dark duration-300">
         <div className="w-full h-[18rem] rounded-b-[2rem]  flex-1 overflow-hidden">
           <img
             className="hover:scale-110 hover:rounded-[2rem] duration-300"
@@ -31,7 +27,7 @@ const ProductCard: React.FC<IProduct> = ({
             {name}
           </p>
           <p className="leading-none mt-2">Estoque: {quantity}</p>
-          <p>Última atualização: {new Date(createdAt).toLocaleDateString()}</p>
+          <p>Última atualização: {new Date(createdAt!).toLocaleDateString()}</p>
         </div>
       </div>
     </NavLink>
