@@ -7,11 +7,16 @@ O protótipo inicial do projeto foi feito no Figma e você pode acessar ele por 
 - `Figma`: https://www.figma.com/design/kYPYr4IOJIguFnuASHP0fx/Salvus-Web-Store?node-id=0-1&t=ZTzL3lQ72idDY8ex-1
 
 ## Como acessar 🌐
-Você pode conferir a interface da aplicação rodando com bugs e tudo mais por esse link 👉 https://salvus-web-store.vercel.app/
+Você pode conferir a interface da aplicação rodando com bugs e tudo mais por esse link 👇
+- `Projeto Web`: https://salvus-web-store.vercel.app/
 
 ## Como instalar localmente 💻
 
-Se você já tiver o Git instalado na sua máquina, basta entrar no 
+### Pré-requisitos
+- É necessário ter o Node.js instalado na versão 18 ou superior. Você pode baixar a versão mais recente [aqui](https://nodejs.org/).
+
+### Obtendo o código
+Você pode obter o projeto fazendo o download do diretório do projeto diretamente pelo GitHub, ou se você já tiver o Git instalado na sua máquina, basta entrar no 
 prompt de comando e rodar esse código para baixar o diretório que contém a aplicação 👇
 ```bash
 git clone https://github.com/AwdreyCandido/salvus-web-store.git
