@@ -1,4 +1,4 @@
-import { AxiosError, AxiosInstance, AxiosResponse } from "axios"
+import { AxiosError, AxiosInstance } from "axios"
 import { getApiClient } from "../axios"
 import { IProduct } from "../../models/IProduct"
 import axios from "axios"

@@ -1,5 +1,5 @@
 import React from "react";
-import { HiOutlineExclamationTriangle, HiStopCircle } from "react-icons/hi2";
+import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 
 interface TextareaProps extends React.HTMLProps<HTMLTextAreaElement> {
   errorMessage?: string

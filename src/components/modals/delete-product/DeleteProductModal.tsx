@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
 import PrimaryButton from '../../ui/buttons/primary-button/PrimaryButton'
 import { ProductsContext } from '../../../context/ProductsContext';
-import { HiArrowLeft, HiXMark } from 'react-icons/hi2';
+import { HiXMark } from 'react-icons/hi2';
 import { deleteProductRequest } from '../../../services/http/products';
 import { useNavigate } from 'react-router-dom';
 import { notifyError, notifySuccess } from '../../../services/notifications/toasts';
 
 const DeleteProductModal: React.FC<{ productId: number, toggleModal: () => void }> = ({ productId, toggleModal }) => {
 
-    const { deleteProduct, closeModal } = useContext(ProductsContext);
+    const { deleteProduct } = useContext(ProductsContext);
     const navigate = useNavigate();
 
     function goBack() {

@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import { IProduct } from "../models/IProduct";
-import { products } from "../data/products";
 
 interface IProductsContextProps {
   showModal: boolean;
