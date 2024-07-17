@@ -2,8 +2,9 @@
 
 ## Descrição
 Esse projeto contém o Front-End de uma aplicação web para gerir produtos de uma loja. Toda a interface foi construida utilizando React, TypeScript e Vite. 
-O protótipo inicial do projeto foi feito no Figma e você pode acessar ele por esse link 👇
-https://www.figma.com/design/kYPYr4IOJIguFnuASHP0fx/Salvus-Web-Store?node-id=0-1&t=ZTzL3lQ72idDY8ex-1
+O protótipo inicial do projeto foi feito no Figma e você pode acessar ele por esse link  👇
+
+- `Figma`: https://www.figma.com/design/kYPYr4IOJIguFnuASHP0fx/Salvus-Web-Store?node-id=0-1&t=ZTzL3lQ72idDY8ex-1
 
 ## Como acessar 🌐
 Você pode conferir a interface da aplicação rodando com bugs e tudo mais por esse link 👉 https://salvus-web-store.vercel.app/
