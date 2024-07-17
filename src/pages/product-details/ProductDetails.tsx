@@ -9,10 +9,13 @@ import DeleteProductModal from "../../components/modals/delete-product/DeletePro
 import placeholderImg from "./../../assets/imgs/placeholder.png";
 import { getProductRequest } from "../../services/http/products";
 import { IProduct } from "../../models/IProduct";
+import Loading from "../../components/ui/loading/Loading";
+import { notifyError } from "../../services/notifications/toasts";
 
 const ProductDetails = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [selected, setSelected] = useState<IProduct | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const { productId } = useParams();
   const { showAddModal, showModal } =
     useContext(ProductsContext);
@@ -20,31 +23,38 @@ const ProductDetails = () => {
 
   useEffect(() => {
     getProductHandler()
-  })
-
+  }, [])
 
   function goBack() {
     navigate(-1);
   }
 
   const getProductHandler = async () => {
+    setIsLoading(true)
     if (productId) {
-      const response = await getProductRequest(+productId)
-      const prod = response?.data
-      setSelected(prod)
+      const res = await getProductRequest(+productId)
+      if (res?.status === 200) {
+        const prod = res?.data
+        setSelected(prod)
+        return setIsLoading(false)
+      }
     }
+
+    notifyError("Erro ao buscar produto")
+    goBack()
   }
-
-
-  if (!productId) return <h1 className="text-h1">Esse produto não existe</h1>;
 
   function deleteModalHandler() {
     setShowDeleteModal(!showDeleteModal)
   }
 
 
+  if (!productId) return <h1 className="text-h1">Esse produto não existe</h1>;
+
+
   return (
     <>
+      {isLoading && <Loading />}
       <Layout>
         <div className="flex flex-col w-full pb-[4rem] justify-between items-center">
           <div className="flex justify-between w-full">

@@ -19,7 +19,7 @@ const DeleteProductModal: React.FC<{ productId: number, toggleModal: () => void 
 
         const res = await deleteProductRequest(+productId)
 
-        if (res?.status == 200 ) { //&& res.statusText == 'OK'
+        if (res?.status == 200 ) {
             deleteProduct(+productId);
             notifySuccess("Produto excluído com sucesso!")
             return goBack();

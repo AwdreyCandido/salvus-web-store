@@ -42,7 +42,7 @@ const UpdateProductModal: React.FC = () => {
     if (productId) {
       const res = await updateProductRequest(+productId, productData)
 
-      if (res?.status == 200) { //&& res.statusText == 'OK'
+      if (res?.status == 200) {
         updateProduct({ ...selectedProduct, ...productData });
         notifySuccess("Produto atualizado com sucesso!")
         return closeModal();

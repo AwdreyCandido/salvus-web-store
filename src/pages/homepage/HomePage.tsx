@@ -7,31 +7,34 @@ import { IProduct } from "../../models/IProduct";
 import NewProductModal from "../../components/modals/new-product/NewProductModal";
 import { getAllProductsRequest } from "../../services/http/products";
 import Aos from "aos";
+import { notifyError } from "../../services/notifications/toasts";
+import Loading from "../../components/ui/loading/Loading";
 
 
 const HomePage = () => {
   const { showAddModal, showModal, productsList, setAllProducts } = useContext(ProductsContext);
-
-  const getAllProductsHandler = async () => {
-    const res = await getAllProductsRequest()
-    console.log(res)
-    if (res?.status == 200 ) { //&& res.statusText == 'OK'
-      setAllProducts(res.data)
-      return
-    }
-
-    window.alert("Erro ao buscar todos os produtos")
-  }
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     Aos.init();
     getAllProductsHandler()
   }, [])
 
-
+  const getAllProductsHandler = async () => {
+    setIsLoading(true)
+    const res = await getAllProductsRequest()
+    console.log(res)
+    if (res?.status == 200) { 
+      setAllProducts(res.data)
+      return setIsLoading(false)
+    }
+  
+    notifyError("Erro ao buscar todos os produtos")
+  }
 
   return (
     <>
+      {isLoading && <Loading />}
       <Layout>
         <div className="text-dark">
           <div className="flex w-full justify-between items-center">
