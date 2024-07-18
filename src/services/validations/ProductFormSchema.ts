@@ -1,27 +1,51 @@
+const nameRequiredError = "Nome é obrigatório";
+const nameMinMessage = "O nome deve ter pelo menos 5 caracteres.";
+const nameMaxMessage = "O nome não pode ter mais de 50 caracteres.";
+
+const descriptionRequiredError = "Descrição é obrigatório";
+const descriptionMinMessage = "A descrição deve ter pelo menos 10 caracteres.";
+const descriptionMaxMessage = "A descrição não pode ter mais de 1000 caracteres.";
+
+const priceInvalidTypeError = "O preço não pode ser menor que R$1.";
+const priceRequiredError = "Preço é obrigatório";
+const pricePositiveMessage = "O preço precisa ser maior que 0.";
+const priceMinMessage = "O preço não pode ser menor que R$1.";
+const priceMaxMessage = "O preço não pode ser maior que R$10000.";
+
+const quantityInvalidTypeError = "A quantidade não pode ser menor que 1.";
+const quantityRequiredError = "Quantidade é obrigatório";
+const quantityIntMessage = "A quantidade precisa ser um número inteiro.";
+const quantityPositiveMessage = "A quantidade precisa ser maior que 0.";
+const quantityMaxMessage = "A quantidade não pode ser maior que 1000.";
+
+const categoryIdInvalidTypeError = "Selecione uma categoria.";
+const categoryIdRequiredError = "Selecione uma categoria.";
+
+const departmentIdInvalidTypeError = "Selecione uma categoria.";
+const departmentIdRequiredError = "Selecione um departamento";
+
 import { z } from "zod";
 
 export const productFormSchema = z.object({
-    name: z.string({ required_error: "Nome é obrigatório" })
-        .min(5, { message: "O nome deve ter pelo menos 5 caracteres." })
-        .max(50, { message: "O nome não pode ter mais de 50 caracteres." }),
-    description: z.string({ required_error: "Descrição é obrigatório" })
-        .min(10, { message: "A descrição deve ter pelo menos 10 caracteres." })
-        .max(1000, { message: "A descrição não pode ter mais de 1000 caracteres." }),
-    price: z.coerce.number({ invalid_type_error: "O preço não pode ser menor que R$1.", required_error: "Preço é obrigatório" })
-        .positive({ message: "O preço precisa ser maior que 0." })
-        .min(1, { message: "O preço não pode ser menor que R$1." })
-        .max(10000, { message: "O preço não pode ser maior que R$10000." }),
-    quantity: z.coerce.number({ invalid_type_error: "A quantidade não pode ser menor que 1.", required_error: "Quantidade é obrigatório" })
-        .int({ message: "A quantidade precisa ser um número inteiro." })
-        .positive({ message: "A quantidade precisa ser maior que 0." })
-        .max(1000, { message: "A quantidade não pode ser maior que 1000." }),
-    categoryId: z.coerce.number({ invalid_type_error: "Selecione uma categoria.", required_error: "Selecione uma categoria." }),
-    departmentId: z.coerce.number({ invalid_type_error: "Selecione uma categoria.", required_error: "Selecione um departamento" }),
-    createdAt: z.string().optional()
-    //     tags: z.string(),
-})//.refine(data => data.price > 0 && data.quantity > 0, {
-//     message: "O preço e a quantidade precisam ser maiores que 0.",
-//     path: ["price", "quantity"],
-// });
+    name: z.string({ required_error: nameRequiredError })
+        .min(5, { message: nameMinMessage })
+        .max(50, { message: nameMaxMessage }),
+    description: z.string({ required_error: descriptionRequiredError })
+        .min(10, { message: descriptionMinMessage })
+        .max(1000, { message: descriptionMaxMessage }),
+    price: z.coerce.number({ invalid_type_error: priceInvalidTypeError, required_error: priceRequiredError })
+        .positive({ message: pricePositiveMessage })
+        .min(1, { message: priceMinMessage })
+        .max(10000, { message: priceMaxMessage }),
+    quantity: z.coerce.number({ invalid_type_error: quantityInvalidTypeError, required_error: quantityRequiredError })
+        .int({ message: quantityIntMessage })
+        .positive({ message: quantityPositiveMessage })
+        .max(1000, { message: quantityMaxMessage }),
+    categoryId: z.coerce.number({ invalid_type_error: categoryIdInvalidTypeError, required_error: categoryIdRequiredError }),
+    departmentId: z.coerce.number({ invalid_type_error: departmentIdInvalidTypeError, required_error: departmentIdRequiredError }),
+    createdAt: z.string().optional(),
+    updatedAt: z.string().optional(),
+    tags: z.string().optional(),
+});
 
 export type ProductFormSchema = z.infer<typeof productFormSchema>;

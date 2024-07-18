@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
 import { HiArrowLeft } from "react-icons/hi2";
-import InputField from "../../ui/inputs/InputField";
-import SelectInput from "../../ui/inputs/SelectInput";
-import TextField from "../../ui/inputs/TextField";
 import { IProduct } from "../../../models/IProduct";
-import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { updateProductRequest } from "../../../services/http/products";
@@ -13,15 +9,16 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductFormSchema, productFormSchema } from "../../../services/validations/ProductFormSchema";
 import { useParams } from "react-router-dom";
+import InputField from "../../ui/inputs/InputField";
+import SelectInput from "../../ui/inputs/SelectInput";
+import TextField from "../../ui/inputs/TextField";
+import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 
 const UpdateProductModal: React.FC = () => {
-
-  // const [product, setProduct] = useState<IProduct>(selectedProduct);
   const { closeModal, updateProduct, productsList } = useContext(ProductsContext);
   const { productId } = useParams();
 
   const selectedProduct = productsList.find((prod) => prod.id == +productId!);
-
 
   const methods = useForm<ProductFormSchema>({
     resolver: zodResolver(productFormSchema),
@@ -33,12 +30,13 @@ const UpdateProductModal: React.FC = () => {
       quantity: selectedProduct?.quantity,
       departmentId: selectedProduct?.departmentId,
       categoryId: selectedProduct?.categoryId,
-      createdAt: selectedProduct?.createdAt
+      createdAt: selectedProduct?.createdAt,
+      updatedAt: selectedProduct?.updatedAt,
+      tags: selectedProduct?.tags
     }
   });
 
   const updateProductHandler = async (productData: IProduct) => {
-    console.log(productData)
     if (productId) {
       const res = await updateProductRequest(+productId, productData)
 
@@ -53,7 +51,7 @@ const UpdateProductModal: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<ProductFormSchema> = async (productData) => {
-    updateProductHandler(productData)
+    await updateProductHandler(productData)
   }
 
 
@@ -206,6 +204,7 @@ const UpdateProductModal: React.FC = () => {
                 }}
               />
             </div>
+            <input type="hidden" {...methods.register("tags")} value={selectedProduct?.tags} />
             <div className="flex w-full mt-[5rem] align-bottom justify-between">
               <PrimaryButton title="Cancelar" mode="delete" onClick={closeModal} />
               <PrimaryButton

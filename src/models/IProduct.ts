@@ -5,6 +5,7 @@ export interface IProduct {
   price: number;
   createdAt?: string;
   // EXTRA FIELDS
+  updatedAt?: string;
   quantity?: number;
   categoryId?: number;
   departmentId?: number;

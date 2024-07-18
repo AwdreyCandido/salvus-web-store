@@ -1,10 +1,6 @@
 import { useContext } from "react";
 import { HiArrowLeft } from "react-icons/hi2";
-import InputField from "../../ui/inputs/InputField";
-import SelectInput from "../../ui/inputs/SelectInput";
-import TextField from "../../ui/inputs/TextField";
 import { IProduct } from "../../../models/IProduct";
-import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 import { categories, departments } from "../../../data/products";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { createProductRequest } from "../../../services/http/products";
@@ -12,6 +8,10 @@ import { notifyError, notifySuccess } from "../../../services/notifications/toas
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { productFormSchema, ProductFormSchema } from "../../../services/validations/ProductFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import InputField from "../../ui/inputs/InputField";
+import SelectInput from "../../ui/inputs/SelectInput";
+import TextField from "../../ui/inputs/TextField";
+import PrimaryButton from "../../ui/buttons/primary-button/PrimaryButton";
 
 const NewProductModal = () => {
   const { closeModal, addProduct } = useContext(ProductsContext);
@@ -25,24 +25,20 @@ const NewProductModal = () => {
 
     const res = await createProductRequest(product)
 
-    if (res?.status == 200) { // && res.statusText == 'OK'
+    if (res?.status == 200 || res?.status == 201) { 
       const id = res.data.insertId
-
 
       addProduct({ ...product, id });
       notifySuccess("Novo produto criado com sucesso!")
-      closeModal();
-      return
+      return closeModal()
     }
 
     notifyError("Falha ao criar novo produto.")
   };
 
   const onSubmit: SubmitHandler<ProductFormSchema> = async (productData) => {
-    const newProduct = productData;
-    newProduct.createdAt = new Date().toISOString()
-
-    await addNewProductHandler(newProduct)
+    console.log(productData)
+    await addNewProductHandler(productData)
   }
 
 
@@ -196,6 +192,7 @@ const NewProductModal = () => {
                 }}
               />
             </div>
+            <input type="hidden" {...methods.register("tags")} value={""} />
             <div className="flex w-full mt-[5rem] align-bottom justify-between">
               <PrimaryButton title="Cancelar" mode="delete" onClick={closeModal} />
               <PrimaryButton

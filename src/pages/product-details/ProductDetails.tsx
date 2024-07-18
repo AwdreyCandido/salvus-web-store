@@ -1,27 +1,28 @@
-import { useContext, useEffect, useState } from "react";
-import Layout from "../../components/ui/layout/Layout";
-import PrimaryButton from "../../components/ui/buttons/primary-button/PrimaryButton";
+import { IProduct } from "../../models/IProduct";
 import { HiArrowLeft } from "react-icons/hi2";
+import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ProductsContext } from "../../context/ProductsContext";
+import { getProductRequest } from "../../services/http/products";
+import { notifyError } from "../../services/notifications/toasts";
+import Layout from "../../components/ui/layout/Layout";
 import UpdateProductModal from "../../components/modals/update-product/UpdateProductModal";
+import PrimaryButton from "../../components/ui/buttons/primary-button/PrimaryButton";
 import DeleteProductModal from "../../components/modals/delete-product/DeleteProductModal";
 import placeholderImg from "./../../assets/imgs/placeholder.png";
-import { getProductRequest } from "../../services/http/products";
-import { IProduct } from "../../models/IProduct";
 import Loading from "../../components/ui/loading/Loading";
-import { notifyError } from "../../services/notifications/toasts";
+import Aos from "aos";
 
 const ProductDetails = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [selected, setSelected] = useState<IProduct | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { productId } = useParams();
-  const { showAddModal, showModal } =
-    useContext(ProductsContext);
+  const { showAddModal, showModal } = useContext(ProductsContext);
   const navigate = useNavigate();
 
   useEffect(() => {
+    Aos.init();
     getProductHandler()
   }, [])
 
@@ -50,7 +51,6 @@ const ProductDetails = () => {
 
 
   if (!productId) return <h1 className="text-h1">Esse produto não existe</h1>;
-
 
   return (
     <>

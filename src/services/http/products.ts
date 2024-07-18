@@ -14,6 +14,7 @@ export const getAllProductsRequest = async () => {
             data: res.data.data
         }
     } catch (error) {
+        console.error(error)
         if (axios.isAxiosError(error)) {
             handleAxiosError(error)
         }
@@ -29,6 +30,7 @@ export const getProductRequest = async (id: number) => {
             data: res.data.data
         }
     } catch (error) {
+        console.error(error)
         if (axios.isAxiosError(error)) {
             handleAxiosError(error)
         }
@@ -44,6 +46,7 @@ export const createProductRequest = async (product: IProduct) => {
             data: res.data.data
         }
     } catch (error) {
+        console.error(error)
         if (axios.isAxiosError(error)) {
             handleAxiosError(error)
         }
@@ -58,6 +61,7 @@ export const updateProductRequest = async (id: number, product: IProduct) => {
             data: res.data.data
         }
     } catch (error) {
+        console.error(error)
         if (axios.isAxiosError(error)) {
             handleAxiosError(error)
         }
@@ -73,6 +77,7 @@ export const deleteProductRequest = async (id: number) => {
             data: res.data.data
         }
     } catch (error) {
+        console.error(error)
         if (axios.isAxiosError(error)) {
             handleAxiosError(error)
         }
